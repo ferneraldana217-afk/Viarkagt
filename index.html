@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viarka GT — Aire y luz pasa por...</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #5B6FE8;
+  --purple: #B85FD8;
+  --gray: #7A7A7A;
+  --bg: #EEF2FF;
+  --bg2: #F7F9FF;
+  --card: #FFFFFF;
+  --border: #E1E8FA;
+  --text: #2D3548;
+  --muted: #6B7A99;
+  --shadow: 0 10px 40px rgba(91,111,232,0.10);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo img { height: 44px; width: 44px; object-fit: contain; }
+.nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--text); }
+.nav-brand span { color: var(--purple); }
+.nav-tagline { font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 32px; align-items: center; list-style: none; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--blue); }
+.nav-cta { background: linear-gradient(135deg, var(--blue), var(--purple)); color: white !important; padding: 10px 22px; border-radius: 8px; font-weight: 600 !important; box-shadow: 0 6px 20px rgba(91,111,232,0.3); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
+.mobile-menu {
+  display: none; position: fixed; inset: 0;
+  background: rgba(255,255,255,0.98); backdrop-filter: blur(20px);
+  z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { color: var(--text); text-decoration: none; font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; }
+.mobile-close { position: absolute; top: 24px; right: 24px; background: none; border: none; color: var(--text); font-size: 28px; cursor: pointer; }
+
+/* HERO */
+#hero {
+  min-height: 100vh; display: flex; align-items: center;
+  position: relative; overflow: hidden;
+}
+.hero-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 25%;
+  filter: saturate(1.08) brightness(1.02);
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(100deg, rgba(238,242,255,0.97) 0%, rgba(238,242,255,0.88) 32%, rgba(91,111,232,0.30) 60%, rgba(184,95,216,0.22) 100%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 660px; padding: 0 48px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: white; border: 1px solid var(--border);
+  padding: 8px 16px; border-radius: 100px; font-size: 12px; font-weight: 600;
+  color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 28px; box-shadow: var(--shadow);
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--purple); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 6.5vw, 80px); font-weight: 300; line-height: 1.05; color: var(--text); margin-bottom: 12px; text-shadow: 0 2px 30px rgba(238,242,255,0.6); }
+h1 strong { font-weight: 700; background: linear-gradient(135deg, var(--blue), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-slogan { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: var(--gray); margin-bottom: 22px; }
+.hero-desc { font-size: 17px; line-height: 1.7; color: var(--muted); margin-bottom: 40px; max-width: 480px; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue), var(--purple)); color: white;
+  padding: 16px 36px; border-radius: 10px; font-size: 15px; font-weight: 600;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 10px 30px rgba(91,111,232,0.35);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(91,111,232,0.45); }
+.btn-secondary {
+  background: white; color: var(--text); padding: 16px 36px; border-radius: 10px;
+  font-size: 15px; font-weight: 500; text-decoration: none;
+  border: 1px solid var(--border); cursor: pointer; transition: 0.2s;
+  display: inline-flex; align-items: center; gap: 8px; box-shadow: var(--shadow);
+}
+.btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+.hero-stats { position: absolute; right: 60px; bottom: 70px; display: flex; gap: 36px; z-index: 2; }
+.stat { text-align: center; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); padding: 16px 22px; border-radius: 14px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 700; color: var(--text); line-height: 1; }
+.stat-num span { color: var(--purple); }
+.stat-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+.hero-caption {
+  position: absolute; right: 60px; top: 100px; z-index: 2;
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(8px);
+  padding: 12px 20px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border);
+  font-size: 12px; color: var(--muted); max-width: 220px; text-align: right;
+}
+.hero-caption strong { color: var(--text); display: block; font-family: 'Cormorant Garamond', serif; font-size: 16px; margin-bottom: 2px; }
+
+/* SECTIONS */
+section { padding: 90px 48px; }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--purple); margin-bottom: 14px; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 4vw, 54px); font-weight: 300; color: var(--text); line-height: 1.1; margin-bottom: 18px; }
+.section-title strong { font-weight: 700; }
+.section-desc { font-size: 16px; line-height: 1.7; color: var(--muted); max-width: 540px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="images/logo.jpg" alt="Viarka GT">
+    <div>
+      <div class="nav-brand">Viarka<span> GT</span></div>
+      <div class="nav-tagline">Aire y luz pasa por...</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#trabajos">Trabajos</a></li>
+    <li><a href="#video">Video</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#cotizacion" class="nav-cta">Cotizar ahora</a></li>
+  </ul>
+  <div class="hamburger" onclick="openMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMenu()">✕</button>
+  <a href="#catalogo" onclick="closeMenu()">Catálogo</a>
+  <a href="#trabajos" onclick="closeMenu()">Trabajos</a>
+  <a href="#video" onclick="closeMenu()">Video</a>
+  <a href="#proceso" onclick="closeMenu()">Proceso</a>
+  <a href="#cotizacion" onclick="closeMenu()">Cotizar</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <img class="hero-photo" src="images/hero.jpg" alt="Proyecto de fachada de vidrio templado Viarka GT">
+  <div class="hero-bg"></div>
+  <div class="hero-caption"><strong>Fachada Comercial</strong>Vidrio templado de piso a techo, instalación llave en mano</div>
+  <div class="hero-content">
+    <div class="hero-badge">Vidrio Templado · UPVC · Acero Inoxidable</div>
+    <h1>Todo en<br><strong>Vidrio<br>Templado</strong></h1>
+    <p class="hero-slogan">"Aire y luz pasa por... Viarka"</p>
+    <p class="hero-desc">Fabricación, venta e instalación de ventanería en aluminio, UPVC y vidrio templado. Contamos con amplia gama de barandas, puertas y mamparas en acero inoxidable.</p>
+    <div class="hero-actions">
+      <a href="#cotizacion" class="btn-primary">📋 Solicitar cotización</a>
+      <a href="#catalogo" class="btn-secondary">📖 Ver catálogo</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">500<span>+</span></div><div class="stat-label">Proyectos</div></div>
+    <div class="stat"><div class="stat-num">8<span>+</span></div><div class="stat-label">Años exp.</div></div>
+    <div class="stat"><div class="stat-num">100<span>%</span></div><div class="stat-label">Garantía</div></div>
+  </div>
+</section>
+<style>
+/* CATALOG */
+#catalogo { background: var(--bg2); }
+.catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; margin-top: 56px; }
+.catalog-card { background: var(--card); border: 1px solid var(--border); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); transition: box-shadow 0.3s; }
+.catalog-card:hover { box-shadow: 0 16px 50px rgba(91,111,232,0.16); }
+.catalog-img { width: 100%; height: 220px; object-fit: cover; display: block; transition: transform 0.4s; }
+.catalog-img-wrap { position: relative; overflow: hidden; cursor: pointer; }
+.catalog-img-wrap:hover .catalog-img { transform: scale(1.06); }
+.catalog-img-overlay {
+  position: absolute; inset: 0; background: linear-gradient(to top, rgba(45,53,72,0.80) 0%, rgba(45,53,72,0.15) 60%, transparent 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  color: white; opacity: 0; transition: opacity 0.3s;
+}
+.catalog-img-wrap:hover .catalog-img-overlay { opacity: 1; }
+.catalog-img-overlay .zoom-icon { font-size: 28px; }
+.catalog-img-overlay span.label { font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
+.catalog-body { padding: 28px; }
+.catalog-icon { width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, rgba(91,111,232,0.12), rgba(184,95,216,0.10)); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 18px; }
+.catalog-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+.catalog-desc { font-size: 14px; line-height: 1.7; color: var(--muted); margin-bottom: 22px; }
+.catalog-pdf-btn {
+  width: 100%; padding: 14px; margin-bottom: 10px; background: linear-gradient(135deg, var(--blue), var(--purple)); color: white;
+  border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'DM Sans', sans-serif;
+  box-shadow: 0 8px 24px rgba(91,111,232,0.25);
+}
+.catalog-pdf-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(91,111,232,0.35); }
+.catalog-toggle {
+  width: 100%; padding: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  font-size: 14px; font-weight: 600; color: var(--blue); cursor: pointer; transition: 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'DM Sans', sans-serif;
+}
+.catalog-toggle:hover { background: var(--border); }
+.catalog-toggle .chevron { transition: transform 0.3s; }
+.catalog-toggle.open .chevron { transform: rotate(180deg); }
+
+/* PDF CATALOG MODAL */
+.pdf-modal { display: none; position: fixed; inset: 0; background: rgba(45,53,72,0.75); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; padding: 24px; }
+.pdf-modal.open { display: flex; }
+.pdf-modal-content { background: white; border-radius: 20px; width: 100%; max-width: 920px; height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow); animation: pdfModalIn 0.25s ease; }
+@keyframes pdfModalIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+.pdf-modal-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 24px; border-bottom: 1px solid var(--border); }
+.pdf-modal-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--text); }
+.pdf-modal-actions { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
+.pdf-modal-link { font-size: 13px; font-weight: 600; color: var(--blue); text-decoration: none; white-space: nowrap; }
+.pdf-modal-link:hover { color: var(--purple); }
+.pdf-modal-close { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg2); cursor: pointer; font-size: 16px; color: var(--text); display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0; }
+.pdf-modal-close:hover { background: var(--border); }
+.pdf-modal-body { flex: 1; background: var(--bg2); }
+.pdf-modal-body iframe { width: 100%; height: 100%; border: 0; display: block; }
+@media (max-width: 700px) { .pdf-modal { padding: 0; } .pdf-modal-content { height: 100vh; border-radius: 0; } }
+.catalog-details {
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+}
+.catalog-details.open { max-height: 2000px; }
+.catalog-details-inner { padding: 24px 28px 28px; border-top: 1px solid var(--border); }
+.subitem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.subitem {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;
+  cursor: pointer; transition: 0.2s;
+}
+.subitem:hover { border-color: var(--blue); background: white; box-shadow: 0 6px 18px rgba(91,111,232,0.12); transform: translateY(-2px); }
+.subitem-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.subitem-name .subitem-arrow { font-size: 11px; font-weight: 600; color: var(--blue); opacity: 0.55; transform: translateX(-3px); transition: 0.2s; flex-shrink: 0; white-space: nowrap; }
+.subitem:hover .subitem-arrow { opacity: 1; transform: translateX(0); }
+.subitem-desc { font-size: 12px; line-height: 1.6; color: var(--muted); }
+.catalog-colors { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+.catalog-colors-title { font-size: 12px; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.color-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.color-tag { font-size: 11px; padding: 5px 12px; border-radius: 100px; background: white; border: 1px solid var(--border); color: var(--muted); }
+@media (max-width: 600px) { .subitem-grid { grid-template-columns: 1fr; } }
+</style>
+
+<!-- CATALOG -->
+<section id="catalogo">
+  <div class="section-label">Catálogo de Servicios</div>
+  <h2 class="section-title">Nuestras<br><strong>especialidades</strong></h2>
+  <p class="section-desc">Toca cada categoría para ver el detalle completo de productos, acabados y colores disponibles.</p>
+
+  <div class="catalog-grid">
+
+    <!-- UPVC -->
+    <div class="catalog-card">
+      <div class="catalog-img-wrap" onclick="openCatalogPdf('images/catalogo-upvc.pdf','Catálogo de Ventanería y Puertas UPVC')">
+        <img src="images/catalogo-upvc.jpg" class="catalog-img" alt="Ventanas y puertas UPVC">
+        <div class="catalog-img-overlay"><span class="zoom-icon">🔍</span><span class="label">Ver catálogo PDF</span></div>
+      </div>
+      <div class="catalog-body">
+        <div class="catalog-icon">🪟</div>
+        <div class="catalog-title">Ventanería y Puertas UPVC</div>
+        <p class="catalog-desc">Sistemas de ventanas y puertas en perfil UPVC blanco e imitación madera, con excelente aislamiento térmico y acústico.</p>
+        <button class="catalog-pdf-btn" onclick="openCatalogPdf('images/catalogo-upvc.pdf','Catálogo de Ventanería y Puertas UPVC')">📄 Ver catálogo PDF</button>
+        <button class="catalog-toggle" onclick="toggleCatalog(this)">Ver especificaciones <span class="chevron">▾</span></button>
+      </div>
+      <div class="catalog-details">
+        <div class="catalog-details-inner">
+          <div class="subitem-grid">
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=2','Catálogo UPVC · Ventana Corrediza')"><div class="subitem-name">Ventana Corrediza <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Eficiencia, ventilación e iluminación. Serie 60 y 80.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=2','Catálogo UPVC · Ventana Fija')"><div class="subitem-name">Ventana Fija <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Aislamiento térmico y acústico, fácil limpieza.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=3','Catálogo UPVC · Ventana Proyectable')"><div class="subitem-name">Ventana Proyectable <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Privacidad, ventilación y aislamiento térmico.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=3','Catálogo UPVC · Ventana Abatible')"><div class="subitem-name">Ventana Abatible <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Amplitud y ventilación máxima.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=4','Catálogo UPVC · Ventana Sifón')"><div class="subitem-name">Ventana Sifón <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Privacidad, ventilación y comodidad.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=4','Catálogo UPVC · Ventana Guillotina')"><div class="subitem-name">Ventana Guillotina <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Estilo, practicidad y comodidad.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=5','Catálogo UPVC · Ventana 3 y 4 cuerpos')"><div class="subitem-name">Ventana 3 y 4 cuerpos <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Adaptación, funcionalidad y amplitud.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=10','Catálogo UPVC · Baywindow')"><div class="subitem-name">Baywindow <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Diseño panorámico, versátil y elegante.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=12','Catálogo UPVC · Puerta Corredera')"><div class="subitem-name">Puerta Corredera <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">2 hojas, 3 rieles o sistema pocket ahorra-espacio.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=15','Catálogo UPVC · Puerta Abatible Andina / Deluxe')"><div class="subitem-name">Puerta Abatible Andina / Deluxe <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Chapa de seguridad, bisagras reforzadas, cedazo mosquitero opcional.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-upvc.pdf#page=11','Catálogo UPVC · Puertas para ducha UPVC')"><div class="subitem-name">Puertas para ducha UPVC <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Resistentes, impermeables y seguras.</div></div>
+          </div>
+          <div class="catalog-colors">
+            <div class="catalog-colors-title">Acabados y series</div>
+            <div class="color-tags">
+              <span class="color-tag">Blanco</span>
+              <span class="color-tag">Imitación madera · Nogal claro</span>
+              <span class="color-tag">Imitación madera · Nogal oscuro</span>
+              <span class="color-tag">Imitación madera · Roble</span>
+              <span class="color-tag">Serie 60</span>
+              <span class="color-tag">Serie 80</span>
+              <span class="color-tag">Serie 88</span>
+            </div>
+            <div class="catalog-colors-title" style="margin-top:14px;">Color de vidrio</div>
+            <div class="color-tags">
+              <span class="color-tag">Claro</span>
+              <span class="color-tag">Bronce</span>
+              <span class="color-tag">Gris</span>
+              <span class="color-tag">Nevado claro</span>
+              <span class="color-tag">Nevado bronce</span>
+              <span class="color-tag">Enmallado</span>
+              <span class="color-tag">Azul reflectivo</span>
+              <span class="color-tag">Súper gris</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACERO INOXIDABLE -->
+    <div class="catalog-card">
+      <div class="catalog-img-wrap" onclick="openCatalogPdf('images/catalogo-barandas.pdf','Catálogo de Barandas de Acero Inoxidable')">
+        <img src="images/catalogo-acero-inoxidable.jpg" class="catalog-img" alt="Barandas de acero inoxidable">
+        <div class="catalog-img-overlay"><span class="zoom-icon">🔍</span><span class="label">Ver catálogo PDF</span></div>
+      </div>
+      <div class="catalog-body">
+        <div class="catalog-icon">🏗️</div>
+        <div class="catalog-title">Barandas de Acero Inoxidable</div>
+        <p class="catalog-desc">Pasamanos y barandas en acero inoxidable calidad 304 para escaleras, balcones y terrazas, con distintos estilos de instalación.</p>
+        <button class="catalog-pdf-btn" onclick="openCatalogPdf('images/catalogo-barandas.pdf','Catálogo de Barandas de Acero Inoxidable')">📄 Ver catálogo PDF</button>
+        <button class="catalog-toggle" onclick="toggleCatalog(this)">Ver especificaciones <span class="chevron">▾</span></button>
+      </div>
+      <div class="catalog-details">
+        <div class="catalog-details-inner">
+          <div class="subitem-grid">
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-barandas.pdf#page=2','Catálogo Barandas · Pasamanos a pared')"><div class="subitem-name">Pasamanos a pared <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Tubo de 2", sujetador tipo "J", anclado directo a pared.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-barandas.pdf#page=3','Catálogo Barandas · Baranda con tubines soldados')"><div class="subitem-name">Baranda con tubines soldados <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Postes de 2" y tubines de 1/2" soldados directamente.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-barandas.pdf#page=4','Catálogo Barandas · Baranda con conectores robóticos')"><div class="subitem-name">Baranda con conectores robóticos <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Uniones limpias y modernas, ideal para interiores.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-barandas.pdf#page=11','Catálogo Barandas · Baranda con barrotes verticales')"><div class="subitem-name">Baranda con barrotes verticales <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Pasamanos y postes de 2", barrotes verticales de 1/2".</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-barandas.pdf#page=9','Catálogo Barandas · Baranda con postes doble hembra')"><div class="subitem-name">Baranda con postes doble hembra <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Postes doble hembra de 4 hilos, ideal para terrazas y balcones.</div></div>
+          </div>
+          <div class="catalog-colors">
+            <div class="catalog-colors-title">Material</div>
+            <div class="color-tags">
+              <span class="color-tag">Acero inoxidable calidad 304</span>
+              <span class="color-tag">Acabado satinado</span>
+              <span class="color-tag">Pasamanos de 2"</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDRIO TEMPLADO -->
+    <div class="catalog-card">
+      <div class="catalog-img-wrap" onclick="openCatalogPdf('images/catalogo-vidrio-templado.pdf','Catálogo de Vidrio Templado')">
+        <img src="images/catalogo-vidrio-templado.jpg" class="catalog-img" alt="Vidrio templado">
+        <div class="catalog-img-overlay"><span class="zoom-icon">🔍</span><span class="label">Ver catálogo PDF</span></div>
+      </div>
+      <div class="catalog-body">
+        <div class="catalog-icon">🚿</div>
+        <div class="catalog-title">Vidrio Templado</div>
+        <p class="catalog-desc">Mamparas para ducha, barandas de vidrio, fachadas comerciales y mobiliario en vidrio templado de alta seguridad.</p>
+        <button class="catalog-pdf-btn" onclick="openCatalogPdf('images/catalogo-vidrio-templado.pdf','Catálogo de Vidrio Templado')">📄 Ver catálogo PDF</button>
+        <button class="catalog-toggle" onclick="toggleCatalog(this)">Ver especificaciones <span class="chevron">▾</span></button>
+      </div>
+      <div class="catalog-details">
+        <div class="catalog-details-inner">
+          <div class="subitem-grid">
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-vidrio-templado.pdf#page=3','Catálogo Vidrio Templado · Puertas de ducha · Corredizo')"><div class="subitem-name">Puertas de ducha · Corredizo <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Sistema de rieles superiores, herrajes en acero inoxidable.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-vidrio-templado.pdf#page=8','Catálogo Vidrio Templado · Puertas de ducha · Abatible')"><div class="subitem-name">Puertas de ducha · Abatible <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Bisagras cromadas, vidrio templado de 8-10mm.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-barandas.pdf#page=5','Catálogo Barandas · Baranda de vidrio templado con mini-postes')"><div class="subitem-name">Baranda con mini-postes <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Vidrio templado 10mm con mini-postes de 1 1/4".</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-barandas.pdf#page=6','Catálogo Barandas · Baranda de vidrio templado con botones')"><div class="subitem-name">Baranda con botones <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Vidrio templado 10mm con botones de sujeción a piso.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-barandas.pdf#page=10','Catálogo Barandas · Baranda de vidrio templado con diseño personalizado')"><div class="subitem-name">Baranda con diseño personalizado <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Acabado sandblast con diseños a medida.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-barandas.pdf#page=8','Catálogo Barandas · Baranda de vidrio templado con postes')"><div class="subitem-name">Baranda con postes <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Vidrio templado 10mm con postes de 2".</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-vidrio-templado.pdf#page=11','Catálogo Vidrio Templado · Fachadas comerciales')"><div class="subitem-name">Fachadas comerciales <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Frentes de vidrio para locales, clínicas y oficinas.</div></div>
+            <div class="subitem" onclick="openCatalogPdf('images/catalogo-vidrio-templado.pdf#page=17','Catálogo Vidrio Templado · Pizarras y top de mesa')"><div class="subitem-name">Pizarras y top de mesa <span class="subitem-arrow">Ver en catálogo →</span></div><div class="subitem-desc">Vidrio templado para escritorios y muebles de oficina.</div></div>
+          </div>
+          <div class="catalog-colors">
+            <div class="catalog-colors-title">Especificaciones</div>
+            <div class="color-tags">
+              <span class="color-tag">Vidrio templado 8mm / 10mm</span>
+              <span class="color-tag">Acero inoxidable 304</span>
+              <span class="color-tag">Vidrio claro / esmerilado</span>
+              <span class="color-tag">Diseño sandblast personalizado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<style>
+/* GALLERY */
+#trabajos { background: var(--bg); }
+.gallery-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 24px; }
+.gallery-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+.filter-btn { background: white; border: 1px solid var(--border); color: var(--muted); padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.filter-btn:hover, .filter-btn.active { background: linear-gradient(135deg, var(--blue), var(--purple)); border-color: transparent; color: white; }
+.gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 220px; gap: 16px; }
+.gallery-item { border-radius: 16px; overflow: hidden; position: relative; cursor: pointer; background: white; border: 1px solid var(--border); transition: transform 0.3s; box-shadow: var(--shadow); }
+.gallery-item:hover { transform: scale(1.02); }
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-item:nth-child(1) { grid-column: span 6; grid-row: span 2; }
+.gallery-item:nth-child(2) { grid-column: span 3; grid-row: span 2; }
+.gallery-item:nth-child(3) { grid-column: span 3; }
+.gallery-item:nth-child(4) { grid-column: span 3; }
+.gallery-item:nth-child(5) { grid-column: span 4; grid-row: span 2; }
+.gallery-item:nth-child(6) { grid-column: span 4; }
+.gallery-item:nth-child(7) { grid-column: span 4; }
+.gallery-item:nth-child(8) { grid-column: span 4; grid-row: span 2; }
+.gallery-item:nth-child(9) { grid-column: span 4; }
+.gallery-item:nth-child(10) { grid-column: span 4; }
+.gallery-item:nth-child(11) { grid-column: span 6; }
+.gallery-item:nth-child(12) { grid-column: span 6; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+.gallery-item:hover img { transform: scale(1.06); }
+.gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(45,53,72,0.85) 0%, rgba(45,53,72,0.1) 60%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; opacity: 0; transition: opacity 0.3s; }
+.gallery-overlay h4 { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: white; font-weight: 600; }
+.gallery-overlay p { font-size: 12px; color: #D9C4FF; margin-top: 4px; }
+
+/* VIDEO SECTION */
+#video { background: var(--bg2); }
+.video-wrap { margin-top: 48px; max-width: 860px; }
+.video-frame {
+  position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 20px; overflow: hidden;
+  background: linear-gradient(135deg, rgba(91,111,232,0.10), rgba(184,95,216,0.10));
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+  display: flex; align-items: center; justify-content: center;
+}
+.video-frame iframe { width: 100%; height: 100%; border: 0; display: none; }
+.video-placeholder { text-align: center; padding: 20px; }
+.video-play-btn {
+  width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--purple));
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; cursor: pointer;
+  box-shadow: 0 10px 30px rgba(91,111,232,0.4); transition: transform 0.2s;
+  font-size: 28px; color: white;
+}
+.video-play-btn:hover { transform: scale(1.08); }
+.video-placeholder h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--text); margin-bottom: 6px; }
+.video-placeholder p { font-size: 14px; color: var(--muted); }
+</style>
+
+<!-- GALLERY -->
+<section id="trabajos">
+  <div class="gallery-header">
+    <div>
+      <div class="section-label">Galería de Proyectos</div>
+      <h2 class="section-title">Trabajos<br><strong>realizados</strong></h2>
+    </div>
+    <p class="section-desc">Cada proyecto refleja nuestro compromiso con la calidad, precisión y el detalle en cada instalación.</p>
+  </div>
+  <div class="gallery-filters">
+    <button class="filter-btn active" onclick="filterGallery('todos',this)">Todos</button>
+    <button class="filter-btn" onclick="filterGallery('baños',this)">Divisiones de baño</button>
+    <button class="filter-btn" onclick="filterGallery('barandas',this)">Barandas</button>
+    <button class="filter-btn" onclick="filterGallery('ventanas',this)">Puertas y Ventanas</button>
+    <button class="filter-btn" onclick="filterGallery('techos',this)">Techos de vidrio</button>
+  </div>
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-item" data-cat="baños">
+      <img src="images/catalogo-vidrio-templado.jpg" alt="División de baño con vidrio esmerilado y herraje corredizo">
+      <div class="gallery-overlay"><h4>Ducha corrediza esmerilada</h4><p>División de baño · Vidrio 10mm</p></div>
+    </div>
+    <div class="gallery-item" data-cat="baños">
+      <img src="images/galeria-ducha-acero.jpg" alt="Cubículo de ducha con barras de acero inoxidable">
+      <div class="gallery-overlay"><h4>Cubículo con barras acero</h4><p>Vidrio templado · Acero inox</p></div>
+    </div>
+    <div class="gallery-item" data-cat="barandas">
+      <img src="images/catalogo-acero-inoxidable.jpg" alt="Baranda de acero inoxidable con tubos horizontales">
+      <div class="gallery-overlay"><h4>Baranda de escalera</h4><p>Acero inoxidable · Tubos horizontales</p></div>
+    </div>
+    <div class="gallery-item" data-cat="barandas">
+      <img src="images/galeria-baranda-escalera.jpg" alt="Baranda de acero inoxidable en escalera">
+      <div class="gallery-overlay"><h4>Baranda con curva</h4><p>Acero inox 304 · Acabado satinado</p></div>
+    </div>
+    <div class="gallery-item" data-cat="baños">
+      <img src="images/galeria-division-corrediza.jpg" alt="División de baño transparente con sistema corredizo">
+      <div class="gallery-overlay"><h4>Ducha corrediza transparente</h4><p>Vidrio claro 10mm · Herraje inox</p></div>
+    </div>
+    <div class="gallery-item" data-cat="techos">
+      <img src="images/galeria-techo-vidrio.jpg" alt="Techo de vidrio con estructura metálica negra">
+      <div class="gallery-overlay"><h4>Techo de vidrio exterior</h4><p>Estructura metálica · Vidrio templado</p></div>
+    </div>
+    <div class="gallery-item" data-cat="baños">
+      <img src="images/galeria-ducha-esquinero.jpg" alt="Cubículo de ducha esquinero con bisagras">
+      <div class="gallery-overlay"><h4>Cubículo esquinero</h4><p>Vidrio templado · Bisagras cromadas</p></div>
+    </div>
+    <div class="gallery-item" data-cat="techos">
+      <img src="images/galeria-pergola.jpg" alt="Pérgola con cubierta de vidrio templado">
+      <div class="gallery-overlay"><h4>Pérgola cubierta de vidrio</h4><p>Estructura negra · Vidrio laminado</p></div>
+    </div>
+    <div class="gallery-item" data-cat="baños">
+      <img src="images/galeria-division-batiente.jpg" alt="División de baño esquinera con puerta batiente">
+      <div class="gallery-overlay"><h4>Cubículo esquinero batiente</h4><p>Vidrio 8mm · Herraje inox</p></div>
+    </div>
+    <div class="gallery-item" data-cat="ventanas">
+      <img src="images/catalogo-upvc.jpg" alt="Puerta UPVC blanca instalada">
+      <div class="gallery-overlay"><h4>Puerta UPVC blanca</h4><p>Perfil importado · Alta seguridad</p></div>
+    </div>
+    <div class="gallery-item" data-cat="barandas">
+      <img src="images/galeria-pasamanos.jpg" alt="Pasamanos de acero inoxidable en escalera">
+      <div class="gallery-overlay"><h4>Pasamanos de escalera</h4><p>Acero inox · Fijación a pared</p></div>
+    </div>
+    <div class="gallery-item" data-cat="ventanas">
+      <img src="images/galeria-puerta-aluminio.jpg" alt="Puerta aluminio oscura con ventiluz superior">
+      <div class="gallery-overlay"><h4>Puerta aluminio con ventiluz</h4><p>Perfil aluminio · Vidrio esmerilado</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section id="video">
+  <div class="section-label">Conócenos</div>
+  <h2 class="section-title">Video<br><strong>informativo</strong></h2>
+  <p class="section-desc">Un repaso visual de nuestros servicios, procesos y proyectos realizados.</p>
+  <div class="video-wrap">
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="video-play-btn" onclick="playVideo()">▶</div>
+        <h4>Video próximamente</h4>
+        <p>Aquí se mostrará un video con los servicios de Viarka GT</p>
+      </div>
+      <iframe id="videoIframe" src="" title="Video Viarka GT" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+<style>
+/* PROCESS */
+#proceso { background: var(--bg); }
+.process-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 56px; }
+.process-steps { display: flex; flex-direction: column; }
+.process-step { display: flex; gap: 22px; padding: 26px 0; border-bottom: 1px solid var(--border); transition: 0.3s; }
+.process-step:last-child { border-bottom: none; }
+.step-num { width: 46px; height: 46px; border: 1px solid var(--border); border-radius: 12px; background: white; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 700; color: var(--purple); flex-shrink: 0; box-shadow: var(--shadow); }
+.step-content h4 { font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--text); margin-bottom: 6px; }
+.step-content p { font-size: 14px; line-height: 1.6; color: var(--muted); }
+.process-visual { background: white; border: 1px solid var(--border); border-radius: 24px; padding: 48px; text-align: center; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.process-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(91,111,232,0.06) 0%, transparent 70%); }
+.process-circle { width: 190px; height: 190px; border: 2px solid rgba(91,111,232,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; position: relative; }
+.process-circle::before { content: ''; position: absolute; inset: -16px; border: 1px solid rgba(91,111,232,0.10); border-radius: 50%; animation: rotate 10s linear infinite; }
+.process-circle::after { content: ''; position: absolute; inset: -32px; border: 1px dashed rgba(184,95,216,0.10); border-radius: 50%; animation: rotate 20s linear infinite reverse; }
+@keyframes rotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.process-icon { font-size: 60px; }
+.process-visual h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--text); margin-bottom: 10px; }
+.process-visual p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* QUOTE */
+#cotizacion { background: var(--bg2); }
+.quote-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 60px; align-items: start; margin-top: 56px; }
+.quote-info { position: sticky; top: 100px; }
+.quote-info h2 { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300; color: var(--text); line-height: 1.2; margin-bottom: 18px; }
+.quote-info h2 strong { font-weight: 700; }
+.quote-info p { font-size: 15px; line-height: 1.7; color: var(--muted); margin-bottom: 36px; }
+.contact-methods { display: flex; flex-direction: column; gap: 14px; }
+.contact-method { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: white; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: 0.2s; box-shadow: var(--shadow); }
+.contact-method:hover { border-color: var(--blue); transform: translateY(-2px); }
+.contact-icon { width: 40px; height: 40px; background: linear-gradient(135deg, rgba(91,111,232,0.12), rgba(184,95,216,0.10)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.contact-label { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+.contact-value { font-size: 15px; color: var(--text); font-weight: 600; }
+.quote-form { background: white; border: 1px solid var(--border); border-radius: 24px; padding: 44px; box-shadow: var(--shadow); }
+.form-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--text); margin-bottom: 8px; }
+.form-subtitle { font-size: 14px; color: var(--muted); margin-bottom: 36px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group.full { grid-column: 1/-1; }
+label { font-size: 13px; font-weight: 600; color: var(--text); }
+input, select, textarea { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 13px 16px; font-size: 15px; color: var(--text); font-family: 'DM Sans', sans-serif; outline: none; transition: 0.2s; -webkit-appearance: none; }
+input::placeholder, textarea::placeholder { color: #A6B3CC; }
+input:focus, select:focus, textarea:focus { border-color: var(--blue); background: white; box-shadow: 0 0 0 3px rgba(91,111,232,0.1); }
+select option { background: white; color: var(--text); }
+textarea { resize: vertical; min-height: 110px; }
+.service-checkboxes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.checkbox-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: 0.2s; }
+.checkbox-item:hover { border-color: var(--blue); }
+.checkbox-item input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; min-width: 18px; padding: 0; border: 2px solid #C7D2F4; border-radius: 5px; background: white; cursor: pointer; position: relative; transition: all 0.2s; }
+.checkbox-item input[type="checkbox"]:checked { background: linear-gradient(135deg, var(--blue), var(--purple)); border-color: var(--purple); }
+.checkbox-item input[type="checkbox"]:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); color: white; font-size: 12px; font-weight: 700; line-height: 1; }
+.checkbox-item:has(input:checked) { border-color: var(--blue); background: rgba(91,111,232,0.06); }
+.checkbox-item label { font-size: 13px; cursor: pointer; margin: 0; }
+.form-divider { grid-column: 1/-1; height: 1px; background: var(--border); margin: 6px 0; }
+.form-submit { grid-column: 1/-1; margin-top: 6px; }
+.submit-btn { width: 100%; padding: 17px; background: linear-gradient(135deg, var(--blue), var(--purple)); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; font-family: 'DM Sans', sans-serif; box-shadow: 0 10px 30px rgba(91,111,232,0.3); display: flex; align-items: center; justify-content: center; gap: 10px; }
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(91,111,232,0.4); }
+.form-note { grid-column: 1/-1; text-align: center; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.success-message { display: none; text-align: center; padding: 40px; }
+.success-message.show { display: block; }
+.success-icon { font-size: 60px; margin-bottom: 20px; display: block; }
+.success-message h3 { font-family: 'Cormorant Garamond', serif; font-size: 30px; color: var(--text); margin-bottom: 10px; }
+.success-message p { font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+/* FOOTER */
+footer { background: white; border-top: 1px solid var(--border); padding: 60px 48px 28px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px; margin-bottom: 44px; }
+.footer-brand { display: flex; flex-direction: column; gap: 14px; }
+.footer-logo { display: flex; align-items: center; gap: 12px; }
+.footer-logo img { height: 44px; width: 44px; object-fit: contain; }
+.footer-desc { font-size: 14px; line-height: 1.7; color: var(--muted); max-width: 280px; }
+.footer-col h5 { font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-col a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-col a:hover { color: var(--blue); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 28px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 16px; }
+.footer-bottom p { font-size: 13px; color: var(--muted); }
+.footer-bottom span { color: var(--purple); }
+.social-links { display: flex; gap: 12px; }
+.social-link { width: 36px; height: 36px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; transition: 0.2s; color: var(--text); }
+.social-link:hover { background: rgba(91,111,232,0.1); border-color: var(--blue); }
+
+/* WHATSAPP FLOAT */
+.wa-float { position: fixed; bottom: 28px; right: 28px; z-index: 100; width: 56px; height: 56px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; animation: floatAnim 3s ease-in-out infinite; }
+.wa-float:hover { transform: scale(1.1); }
+@keyframes floatAnim { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav{padding:18px 24px;} .nav-links{display:none;} .hamburger{display:flex;}
+  section{padding:70px 24px;} #hero{padding:0 24px;}
+  .hero-stats{right:24px;bottom:32px; gap: 14px;}
+  .hero-caption{display:none;}
+  .stat{padding:10px 14px;}
+  .stat-num{font-size:28px;}
+  .process-grid{grid-template-columns:1fr;}
+  .quote-layout{grid-template-columns:1fr;gap:40px;} .quote-info{position:static;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  h1{font-size:42px;}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:160px;}
+  .gallery-item:nth-child(n){grid-column:span 1;grid-row:span 1;}
+  .gallery-item:nth-child(1),.gallery-item:nth-child(5),.gallery-item:nth-child(8),.gallery-item:nth-child(11){grid-column:span 2;}
+  .form-grid{grid-template-columns:1fr;}
+  .form-group.full,.form-submit,.form-note,.form-divider{grid-column:1;}
+  .service-checkboxes,.subitem-grid{grid-template-columns:1fr;}
+  .hero-stats{display:none;}
+  .quote-form{padding:26px 18px;}
+  footer{padding:44px 24px 22px;} .footer-grid{grid-template-columns:1fr;gap:30px;}
+  .catalog-grid{grid-template-columns:1fr;}
+}
+</style>
+
+<!-- PROCESS -->
+<section id="proceso">
+  <div class="section-label">¿Cómo trabajamos?</div>
+  <h2 class="section-title">Nuestro <strong>proceso</strong></h2>
+  <div class="process-grid">
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-content"><h4>Consulta y Cotización</h4><p>Nos contactas por WhatsApp, teléfono o formulario. Analizamos tu necesidad y preparamos una cotización detallada sin costo.</p></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-content"><h4>Visita Técnica</h4><p>Un técnico especializado visita el sitio para tomar medidas exactas, evaluar condiciones y confirmar los detalles del proyecto.</p></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-content"><h4>Fabricación a Medida</h4><p>Fabricamos cada pieza con materiales de primera calidad, cortados y tratados con precisión milimétrica para tu espacio.</p></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-content"><h4>Instalación Profesional</h4><p>Nuestro equipo instala en el tiempo acordado, con acabados perfectos y limpieza total del área al finalizar.</p></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div>
+        <div class="step-content"><h4>Garantía y Seguimiento</h4><p>Entregamos garantía escrita en materiales e instalación. Disponibles para cualquier consulta posterior.</p></div>
+      </div>
+    </div>
+    <div class="process-visual">
+      <div class="process-circle"><div class="process-icon">🪟</div></div>
+      <h3>Calidad garantizada</h3>
+      <p>Cada proyecto se ejecuta con los más altos estándares de la industria. Tu satisfacción es nuestra prioridad número uno.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE FORM -->
+<section id="cotizacion">
+  <div class="section-label">Solicitud de Cotización</div>
+  <div class="quote-layout">
+    <div class="quote-info">
+      <h2>Obtén tu<br><strong>cotización gratis</strong></h2>
+      <p>Completa el formulario y nos pondremos en contacto contigo en menos de 24 horas con una propuesta detallada para tu proyecto.</p>
+      <div class="contact-methods">
+        <a href="https://wa.me/50248680563" class="contact-method" target="_blank">
+          <div class="contact-icon">💬</div>
+          <div><div class="contact-label">WhatsApp</div><div class="contact-value">4868-0563</div></div>
+        </a>
+        <a href="tel:+50248680563" class="contact-method">
+          <div class="contact-icon">📞</div>
+          <div><div class="contact-label">Teléfono</div><div class="contact-value">4868-0563</div></div>
+        </a>
+        <a href="mailto:viarka.templado@gmail.com" class="contact-method">
+          <div class="contact-icon">📧</div>
+          <div><div class="contact-label">Correo electrónico</div><div class="contact-value">viarka.templado@gmail.com</div></div>
+        </a>
+        <a href="https://facebook.com/ViarkaGT" class="contact-method" target="_blank">
+          <div class="contact-icon">📘</div>
+          <div><div class="contact-label">Facebook</div><div class="contact-value">Viarka GT</div></div>
+        </a>
+      </div>
+    </div>
+    <div class="quote-form">
+      <div id="formContent">
+        <div class="form-title">Cuéntanos tu proyecto</div>
+        <p class="form-subtitle">Todos los campos marcados con * son obligatorios</p>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nombre">Nombre completo *</label>
+            <input type="text" id="nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="telefono">Teléfono / WhatsApp *</label>
+            <input type="tel" id="telefono" placeholder="4868-0563" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" placeholder="tu@email.com">
+          </div>
+          <div class="form-group">
+            <label for="ubicacion">Ciudad / Municipio *</label>
+            <input type="text" id="ubicacion" placeholder="Ej: Guatemala, Mixco..." required>
+          </div>
+          <div class="form-divider"></div>
+          <div class="form-group full">
+            <label>Servicios de interés (selecciona los que apliquen)</label>
+            <div class="service-checkboxes">
+              <div class="checkbox-item"><input type="checkbox" id="s1" value="division-bano"><label for="s1">🚿 División de baño</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="s2" value="baranda-acero"><label for="s2">🏗️ Baranda acero inox</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="s3" value="baranda-vidrio"><label for="s3">🪞 Baranda de vidrio</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="s4" value="ventana-upvc"><label for="s4">🪟 Ventana UPVC</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="s5" value="puerta-upvc"><label for="s5">🚪 Puerta UPVC</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="s6" value="comercial"><label for="s6">🏢 Proyecto comercial</label></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="tipo">Tipo de inmueble *</label>
+            <select id="tipo" required>
+              <option value="" disabled selected>Seleccionar...</option>
+              <option value="casa">Casa particular</option>
+              <option value="apartamento">Apartamento</option>
+              <option value="oficina">Oficina</option>
+              <option value="local">Local comercial</option>
+              <option value="edificio">Edificio</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="presupuesto">Presupuesto aproximado</label>
+            <select id="presupuesto">
+              <option value="" disabled selected>Seleccionar...</option>
+              <option value="menos-5000">Menos de Q5,000</option>
+              <option value="5000-15000">Q5,000 - Q15,000</option>
+              <option value="15000-30000">Q15,000 - Q30,000</option>
+              <option value="mas-30000">Más de Q30,000</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="descripcion">Descripción del proyecto *</label>
+            <textarea id="descripcion" placeholder="Describe lo que necesitas: medidas aproximadas, materiales de preferencia, urgencia, etc." required></textarea>
+          </div>
+          <div class="form-group full">
+            <label for="como">¿Cómo nos conociste?</label>
+            <select id="como">
+              <option value="" disabled selected>Seleccionar...</option>
+              <option value="facebook">Facebook</option>
+              <option value="instagram">Instagram</option>
+              <option value="google">Google</option>
+              <option value="recomendacion">Recomendación</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="form-submit">
+            <button type="button" class="submit-btn" onclick="submitForm()">📋 Enviar solicitud de cotización</button>
+          </div>
+          <p class="form-note">✅ Respuesta garantizada en menos de 24 horas hábiles. Sin compromiso.</p>
+        </div>
+      </div>
+      <div class="success-message" id="successMsg">
+        <span class="success-icon">✅</span>
+        <h3>¡Solicitud enviada!</h3>
+        <p>Gracias por contactarnos. Hemos recibido tu solicitud y nos pondremos en contacto contigo en menos de 24 horas para presentarte tu cotización personalizada.</p>
+        <br>
+        <a href="https://wa.me/50248680563" class="btn-primary" style="display:inline-flex;margin:20px auto 0;" target="_blank">💬 Contactar por WhatsApp ahora</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="images/logo.jpg" alt="Viarka GT">
+        <div>
+          <div class="nav-brand">Viarka<span style="color:var(--purple)"> GT</span></div>
+          <div style="font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;">Aire y luz pasa por...</div>
+        </div>
+      </div>
+      <p class="footer-desc">Empresa guatemalteca especializada en vidrio templado, barandas de acero inoxidable, puertas y ventanas UPVC y aluminio euro.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Catálogo</h5>
+      <ul>
+        <li><a href="#catalogo">Ventanería UPVC</a></li>
+        <li><a href="#catalogo">Barandas acero inox</a></li>
+        <li><a href="#catalogo">Vidrio templado</a></li>
+        <li><a href="#trabajos">Proyectos realizados</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Empresa</h5>
+      <ul>
+        <li><a href="#proceso">Nuestro proceso</a></li>
+        <li><a href="#video">Video informativo</a></li>
+        <li><a href="#cotizacion">Solicitar cotización</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contacto</h5>
+      <ul>
+        <li><a href="https://wa.me/50248680563" target="_blank">WhatsApp: 4868-0563</a></li>
+        <li><a href="tel:+50248680563">Tel: 4868-0563</a></li>
+        <li><a href="mailto:viarka.templado@gmail.com">viarka.templado@gmail.com</a></li>
+        <li><a href="https://facebook.com/ViarkaGT" target="_blank">Facebook: Viarka GT</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <span>Viarka GT</span>. Todos los derechos reservados.</p>
+    <div class="social-links">
+      <a href="https://facebook.com/ViarkaGT" class="social-link" target="_blank" title="Facebook">f</a>
+      <a href="https://wa.me/50248680563" class="social-link" target="_blank" title="WhatsApp">💬</a>
+      <a href="mailto:viarka.templado@gmail.com" class="social-link" title="Email">✉</a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/50248680563" class="wa-float" target="_blank" title="Contáctanos por WhatsApp">💬</a>
+
+<!-- PDF CATALOG MODAL -->
+<div class="pdf-modal" id="pdfModal" onclick="if(event.target===this) closeCatalogPdf()">
+  <div class="pdf-modal-content">
+    <div class="pdf-modal-header">
+      <h3 id="pdfModalTitle">Catálogo</h3>
+      <div class="pdf-modal-actions">
+        <a id="pdfModalOpenNew" href="#" target="_blank" rel="noopener" class="pdf-modal-link">Abrir en pestaña nueva ↗</a>
+        <button class="pdf-modal-close" onclick="closeCatalogPdf()" aria-label="Cerrar">✕</button>
+      </div>
+    </div>
+    <div class="pdf-modal-body">
+      <iframe id="pdfModalFrame" src="" title="Catálogo PDF"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+function openMenu(){ document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
+
+function toggleCatalog(btn){
+  btn.classList.toggle('open');
+  const details = btn.closest('.catalog-body').nextElementSibling;
+  details.classList.toggle('open');
+  btn.innerHTML = details.classList.contains('open')
+    ? 'Ocultar especificaciones <span class="chevron">▾</span>'
+    : 'Ver especificaciones <span class="chevron">▾</span>';
+}
+
+function openCatalogPdf(url, title){
+  document.getElementById('pdfModalTitle').textContent = title;
+  const frame = document.getElementById('pdfModalFrame');
+  frame.src = '';
+  frame.src = url;
+  document.getElementById('pdfModalOpenNew').href = url;
+  document.getElementById('pdfModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCatalogPdf(){
+  document.getElementById('pdfModal').classList.remove('open');
+  document.getElementById('pdfModalFrame').src = '';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeCatalogPdf(); });
+
+function playVideo(){
+  // Replace VIDEO_ID_HERE with the real YouTube video ID when available
+  const videoId = '';
+  if(!videoId){
+    alert('Aún no se ha configurado un video. Reemplaza VIDEO_ID_HERE en el código con el ID de YouTube del video.');
+    return;
+  }
+  document.getElementById('videoIframe').src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+  document.getElementById('videoIframe').style.display = 'block';
+  document.getElementById('videoPlaceholder').style.display = 'none';
+}
+
+function filterGallery(cat, btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.gallery-item').forEach(item=>{
+    if(cat==='todos'||item.dataset.cat===cat){
+      item.style.display='';
+      item.style.opacity='0'; item.style.transform='scale(0.95)';
+      setTimeout(()=>{ item.style.transition='opacity 0.3s,transform 0.3s'; item.style.opacity='1'; item.style.transform='scale(1)'; },50);
+    } else { item.style.display='none'; }
+  });
+}
+
+function submitForm(){
+  const nombre=document.getElementById('nombre').value.trim();
+  const telefono=document.getElementById('telefono').value.trim();
+  const ubicacion=document.getElementById('ubicacion').value.trim();
+  const tipo=document.getElementById('tipo').value;
+  const descripcion=document.getElementById('descripcion').value.trim();
+  if(!nombre||!telefono||!ubicacion||!tipo||!descripcion){ alert('Por favor completa todos los campos obligatorios (marcados con *).'); return; }
+  const btn=document.querySelector('.submit-btn');
+  btn.textContent='⏳ Enviando...'; btn.disabled=true;
+  const services=[];
+  document.querySelectorAll('.service-checkboxes input:checked').forEach(cb=>services.push(cb.nextElementSibling.textContent.trim()));
+  const msg=`*Nueva Solicitud de Cotización - Viarka GT*\n\n*Nombre:* ${nombre}\n*Teléfono:* ${telefono}\n*Email:* ${document.getElementById('email').value||'No indicado'}\n*Ubicación:* ${ubicacion}\n*Tipo de inmueble:* ${tipo}\n*Presupuesto:* ${document.getElementById('presupuesto').value||'No especificado'}\n*Servicios:* ${services.length>0?services.join(', '):'No especificado'}\n*Descripción:* ${descripcion}\n*¿Cómo nos conoció?:* ${document.getElementById('como').value||'No especificado'}`;
+  setTimeout(()=>{
+    document.getElementById('formContent').style.display='none';
+    document.getElementById('successMsg').classList.add('show');
+    window.open(`https://wa.me/50248680563?text=${encodeURIComponent(msg)}`, '_blank');
+    ['nombre','telefono','email','ubicacion','descripcion'].forEach(id=>document.getElementById(id).value='');
+    ['tipo','presupuesto','como'].forEach(id=>{ const el=document.getElementById(id); if(el) el.selectedIndex=0; });
+    document.querySelectorAll('.service-checkboxes input[type="checkbox"]').forEach(cb=>cb.checked=false);
+    btn.textContent='📋 Enviar solicitud de cotización';
+    btn.disabled=false;
+    setTimeout(()=>{
+      document.getElementById('successMsg').classList.remove('show');
+      document.getElementById('formContent').style.display='block';
+    }, 4000);
+  }, 1200);
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){ const t=document.querySelector(this.getAttribute('href')); if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});} });
+});
+
+const obs=new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';} }); },{threshold:0.1});
+document.querySelectorAll('.catalog-card,.process-step').forEach(el=>{ el.style.opacity='0'; el.style.transform='translateY(24px)'; el.style.transition='opacity 0.6s ease,transform 0.6s ease'; obs.observe(el); });
+</script>
+</body>
+</html>
