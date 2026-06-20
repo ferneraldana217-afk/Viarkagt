@@ -67,21 +67,22 @@ nav {
   position: absolute;
   top: 0; left: 0; right: 0;
   overflow: hidden;
-  animation: photoShrink 2.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: photoShrink 4.5s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 @keyframes photoShrink {
   0%   { height: 100vh; }
   100% { height: 50vh; }
 }
 .hero-photo {
-  width: 100%; height: 100%; min-height: 50vh;
-  object-fit: cover; object-position: center 22%;
+  position: absolute; left: 0; top: -5.26%;
+  width: 100%; height: 110.5%; min-height: 55.25vh;
+  object-fit: cover; object-position: center 62%;
   filter: saturate(0.85) brightness(0.92);
   will-change: transform;
-  animation: heroZoom 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: heroZoom 5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 @keyframes heroZoom {
-  0%   { transform: scale(1.6); filter: saturate(0.4) brightness(0.55); }
+  0%   { transform: scale(1.85); filter: saturate(0.4) brightness(0.55); }
   100% { transform: scale(1.0); filter: saturate(0.85) brightness(0.92); }
 }
 .hero-bg { display: none; }
@@ -565,20 +566,21 @@ section { padding: 90px 48px; }
   <p class="section-desc" style="margin-bottom:48px;">Marcas líderes en Guatemala han confiado en Viarka para sus proyectos.</p>
   <div class="carousel-outer">
     <div class="carousel-track" id="carouselTrack">
-      <div class="carousel-item"><img src="https://logo.clearbit.com/yamaha-motor.com" alt="Yamaha" onerror="this.style.display='none'"><span>Yamaha</span></div>
-      <div class="carousel-item"><img src="https://logo.clearbit.com/hyundai.com" alt="Hyundai" onerror="this.style.display='none'"><span>Hyundai</span></div>
-      <div class="carousel-item"><img src="https://logo.clearbit.com/isuzu.com" alt="Isuzu" onerror="this.style.display='none'"><span>Isuzu</span></div>
-      <div class="carousel-item"><img src="https://logo.clearbit.com/hp.com" alt="HP" onerror="this.style.display='none'"><span>HP</span></div>
-      <div class="carousel-item"><img src="https://logo.clearbit.com/motul.com" alt="Motul" onerror="this.style.display='none'"><span>Motul</span></div>
-      <div class="carousel-item no-img"><span>IGSS</span></div>
-      <div class="carousel-item no-img"><span>Lili Pink</span></div>
-      <div class="carousel-item no-img"><span>Grupo Canella</span></div>
-      <div class="carousel-item no-img"><span>Studio F</span></div>
-      <div class="carousel-item no-img"><span>Panda Express</span></div>
+      <div class="carousel-item"><img src="images/logos/yamaha_logo.jpg" alt="Yamaha"><span>Yamaha</span></div>
+      <div class="carousel-item"><img src="images/logos/hyundai_logo.jpg" alt="Hyundai"><span>Hyundai</span></div>
+      <div class="carousel-item"><img src="images/logos/isuzu_logo.jpg" alt="Isuzu"><span>Isuzu</span></div>
+      <div class="carousel-item"><img src="images/logos/hp_logo.jpg" alt="HP"><span>HP</span></div>
+      <div class="carousel-item"><img src="images/logos/motul_logo.jpg" alt="Motul"><span>Motul</span></div>
+      <div class="carousel-item"><img src="images/logos/igss_logo.jpg" alt="IGSS"><span>IGSS</span></div>
+      <div class="carousel-item"><img src="images/logos/lilipink_logo.jpg" alt="Lili Pink"><span>Lili Pink</span></div>
+      <div class="carousel-item"><img src="images/logos/canella_logo.jpg" alt="Grupo Canella"><span>Grupo Canella</span></div>
+      <div class="carousel-item"><img src="images/logos/studiof_logo.jpg" alt="Studio F"><span>Studio F</span></div>
+      <div class="carousel-item"><img src="images/logos/pandaexpress_logo.jpg" alt="Panda Express"><span>Panda Express</span></div>
       <div class="carousel-item no-img"><span>Grafipronto</span></div>
-      <div class="carousel-item no-img"><span>Helados Sarita</span></div>
-      <div class="carousel-item no-img"><span>Carrión</span></div>
-      <div class="carousel-item no-img"><span>Terra Delfines z.14</span></div>
+      <div class="carousel-item"><img src="images/logos/sarita_logo.jpg" alt="Helados Sarita"><span>Helados Sarita</span></div>
+      <div class="carousel-item"><img src="images/logos/carrion_logo.jpg" alt="Carrión"><span>Carrión</span></div>
+      <div class="carousel-item"><img src="images/logos/terradelfines_logo.jpg" alt="Terra Delfines z.14"><span>Terra Delfines z.14</span></div>
+      <div class="carousel-item"><img src="images/logos/basshert_logo.jpg" alt="Basshert"><span>Basshert</span></div>
     </div>
   </div>
 </section>
