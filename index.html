@@ -93,7 +93,7 @@ nav {
   border-top: 1px solid var(--border);
   display: flex; align-items: center;
   padding: 0 60px;
-  overflow: hidden;
+  overflow: auto;
   animation: contentReveal 0.7s ease 2s both;
 }
 @keyframes contentReveal {
@@ -102,7 +102,8 @@ nav {
 }
 .hero-content-inner {
   width: 100%; max-width: 1200px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between; gap: 48px;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+  padding: 20px 0;
 }
 .hero-overlay { display: none; }
 .hero-badge {
@@ -564,12 +565,12 @@ section { padding: 90px 48px; }
   <p class="section-desc" style="margin-bottom:48px;">Marcas líderes en Guatemala han confiado en Viarka para sus proyectos.</p>
   <div class="carousel-outer">
     <div class="carousel-track" id="carouselTrack">
-      <div class="carousel-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Yamaha_Motor_logo.svg/200px-Yamaha_Motor_logo.svg.png" alt="Yamaha"><span>Yamaha</span></div>
-      <div class="carousel-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Hyundai_Motor_Company_logo.svg/200px-Hyundai_Motor_Company_logo.svg.png" alt="Hyundai"><span>Hyundai</span></div>
-      <div class="carousel-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Isuzu_logo.svg/200px-Isuzu_logo.svg.png" alt="Isuzu"><span>Isuzu</span></div>
-      <div class="carousel-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/HP_logo_2012.svg/120px-HP_logo_2012.svg.png" alt="HP"><span>HP</span></div>
-      <div class="carousel-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Motul_logo.svg/200px-Motul_logo.svg.png" alt="Motul"><span>Motul</span></div>
-      <div class="carousel-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Logo_IGSS_Guatemala.png/200px-Logo_IGSS_Guatemala.png" alt="IGSS"><span>IGSS</span></div>
+      <div class="carousel-item"><img src="https://logo.clearbit.com/yamaha-motor.com" alt="Yamaha" onerror="this.style.display='none'"><span>Yamaha</span></div>
+      <div class="carousel-item"><img src="https://logo.clearbit.com/hyundai.com" alt="Hyundai" onerror="this.style.display='none'"><span>Hyundai</span></div>
+      <div class="carousel-item"><img src="https://logo.clearbit.com/isuzu.com" alt="Isuzu" onerror="this.style.display='none'"><span>Isuzu</span></div>
+      <div class="carousel-item"><img src="https://logo.clearbit.com/hp.com" alt="HP" onerror="this.style.display='none'"><span>HP</span></div>
+      <div class="carousel-item"><img src="https://logo.clearbit.com/motul.com" alt="Motul" onerror="this.style.display='none'"><span>Motul</span></div>
+      <div class="carousel-item no-img"><span>IGSS</span></div>
       <div class="carousel-item no-img"><span>Lili Pink</span></div>
       <div class="carousel-item no-img"><span>Grupo Canella</span></div>
       <div class="carousel-item no-img"><span>Studio F</span></div>
@@ -752,20 +753,9 @@ textarea { resize: vertical; min-height: 110px; }
 .float-cta:hover {
   box-shadow: 0 12px 32px rgba(91,111,232,0.6);
 }
-/* RESPONSIVE ADDITIONS */
-@media(max-width:1024px){
-  .hero-content { padding: 0 32px; }
-  .hero-content-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
-  .hero-stats { flex-direction: row; gap: 16px; }
-}
-@media(max-width:768px){
-  .hero-stats-inline { gap: 20px; }
-  .stat-inline .stat-num { font-size: 32px; }
-  .carousel-item { min-width: 130px; padding: 16px 18px; }
-}
-@media(max-width:480px){
-  .carousel-item { min-width: 110px; padding: 14px 14px; }
-}
+/* keyframes alternativos para responsive (fuera de @media) */
+@keyframes photoShrinkMd { 0%{height:100vh} 100%{height:52vh} }
+@keyframes photoShrinkSm { 0%{height:100vh} 100%{height:44vw} }
 
 /* FOOTER */
 footer { background: white; border-top: 1px solid var(--border); padding: 60px 48px 28px; }
@@ -796,27 +786,45 @@ footer { background: white; border-top: 1px solid var(--border); padding: 60px 4
 /* RESPONSIVE */
 @media(max-width:1024px){
   nav{padding:18px 24px;} .nav-links{display:none;} .hamburger{display:flex;}
-  section{padding:70px 24px;} #hero{padding:0 24px;}
-  .hero-stats{right:24px;bottom:32px; gap: 14px;}
+  section{padding:70px 24px;}
+  /* hero tablet */
+  .hero-photo-wrap { animation-name: photoShrinkMd; }
+  .hero-content { padding: 0 32px; }
+  .hero-content-inner { gap: 28px; }
   .hero-caption{display:none;}
-  .stat{padding:10px 14px;}
-  .stat-num{font-size:28px;}
+  .stat{padding:10px 14px;} .stat-num{font-size:26px;}
   .process-grid{grid-template-columns:1fr;}
   .quote-layout{grid-template-columns:1fr;gap:40px;} .quote-info{position:static;}
   .footer-grid{grid-template-columns:1fr 1fr;}
 }
 @media(max-width:768px){
-  h1{font-size:42px;}
+  /* hero móvil: vuelve a flujo normal */
+  #hero { display:flex; flex-direction:column; height:auto; min-height:100vh; }
+  .hero-photo-wrap { position:relative; top:auto; left:auto; right:auto; animation-name:photoShrinkSm; height:100vh; }
+  .hero-content { position:relative; bottom:auto; left:auto; right:auto; height:auto; padding:28px 24px 36px; overflow:visible; border-top:1px solid var(--border); }
+  .hero-content-inner { flex-direction:column; align-items:flex-start; gap:14px; padding:0; }
+  .hero-stats { display:none; }
+  .hero-badge { font-size:10px; padding:6px 12px; margin-bottom:10px; }
+  h1 { font-size:clamp(28px,8vw,42px) !important; margin-bottom:6px; }
+  .hero-slogan { font-size:14px; margin-bottom:8px; }
+  .hero-desc { font-size:13px; margin-bottom:18px; }
+  .hero-actions { gap:10px; }
+  .btn-primary,.btn-secondary { padding:12px 20px; font-size:14px; }
+  /* resto */
   .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:160px;}
   .gallery-item:nth-child(n){grid-column:span 1;grid-row:span 1;}
   .gallery-item:nth-child(1),.gallery-item:nth-child(5),.gallery-item:nth-child(8),.gallery-item:nth-child(11){grid-column:span 2;}
   .form-grid{grid-template-columns:1fr;}
   .form-group.full,.form-submit,.form-note,.form-divider{grid-column:1;}
   .service-checkboxes,.subitem-grid{grid-template-columns:1fr;}
-  .hero-stats{display:none;}
   .quote-form{padding:26px 18px;}
   footer{padding:44px 24px 22px;} .footer-grid{grid-template-columns:1fr;gap:30px;}
   .catalog-grid{grid-template-columns:1fr;}
+  .carousel-item{min-width:130px; padding:16px 18px;}
+}
+@media(max-width:480px){
+  h1 { font-size:clamp(24px,9vw,34px) !important; }
+  .carousel-item{min-width:110px; padding:14px;}
 }
 </style>
 
