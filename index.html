@@ -968,6 +968,11 @@ footer { background: white; border-top: 1px solid var(--border); padding: 60px 4
               <div class="checkbox-item"><input type="checkbox" id="s4" value="ventana-upvc"><label for="s4">🪟 Ventana UPVC</label></div>
               <div class="checkbox-item"><input type="checkbox" id="s5" value="puerta-upvc"><label for="s5">🚪 Puerta UPVC</label></div>
               <div class="checkbox-item"><input type="checkbox" id="s6" value="comercial"><label for="s6">🏢 Proyecto comercial</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="s7" value="otro" onchange="toggleOtroServicio(this)"><label for="s7">✨ Otro</label></div>
+            </div>
+            <div class="form-group full" id="otroServicioWrap" style="display:none; margin-top:10px;">
+              <label for="otroServicio">Cuéntanos qué necesitas</label>
+              <input type="text" id="otroServicio" placeholder="Ej: Mampara comercial, mobiliario en vidrio, estructura metálica...">
             </div>
           </div>
           <div class="form-group">
@@ -1242,6 +1247,12 @@ function filterGallery(cat, btn){
   }
 }
 
+function toggleOtroServicio(cb){
+  const wrap = document.getElementById('otroServicioWrap');
+  wrap.style.display = cb.checked ? 'block' : 'none';
+  if(!cb.checked) document.getElementById('otroServicio').value = '';
+}
+
 function submitForm(){
   const nombre=document.getElementById('nombre').value.trim();
   const telefono=document.getElementById('telefono').value.trim();
@@ -1252,7 +1263,14 @@ function submitForm(){
   const btn=document.querySelector('.submit-btn');
   btn.textContent='⏳ Enviando...'; btn.disabled=true;
   const services=[];
-  document.querySelectorAll('.service-checkboxes input:checked').forEach(cb=>services.push(cb.nextElementSibling.textContent.trim()));
+  document.querySelectorAll('.service-checkboxes input:checked').forEach(cb=>{
+    if(cb.value==='otro'){
+      const otroTexto=document.getElementById('otroServicio').value.trim();
+      services.push(otroTexto ? `Otro: ${otroTexto}` : 'Otro (sin especificar)');
+    } else {
+      services.push(cb.nextElementSibling.textContent.trim());
+    }
+  });
   const msg=`*Nueva Solicitud de Cotización - Viarka GT*\n\n*Nombre:* ${nombre}\n*Teléfono:* ${telefono}\n*Email:* ${document.getElementById('email').value||'No indicado'}\n*Ubicación:* ${ubicacion}\n*Tipo de inmueble:* ${tipo}\n*Presupuesto:* ${document.getElementById('presupuesto').value||'No especificado'}\n*Servicios:* ${services.length>0?services.join(', '):'No especificado'}\n*Descripción:* ${descripcion}\n*¿Cómo nos conoció?:* ${document.getElementById('como').value||'No especificado'}`;
   setTimeout(()=>{
     document.getElementById('formContent').style.display='none';
@@ -1261,6 +1279,8 @@ function submitForm(){
     ['nombre','telefono','email','ubicacion','descripcion'].forEach(id=>document.getElementById(id).value='');
     ['tipo','presupuesto','como'].forEach(id=>{ const el=document.getElementById(id); if(el) el.selectedIndex=0; });
     document.querySelectorAll('.service-checkboxes input[type="checkbox"]').forEach(cb=>cb.checked=false);
+    document.getElementById('otroServicioWrap').style.display='none';
+    document.getElementById('otroServicio').value='';
     btn.textContent='📋 Enviar solicitud de cotización';
     btn.disabled=false;
     setTimeout(()=>{
